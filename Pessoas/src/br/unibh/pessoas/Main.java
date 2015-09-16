@@ -1,6 +1,6 @@
 package br.unibh.pessoas;
 
-import br.unibh.pessoas.persitencia.PessoaFisicaDAO;
+import br.unibh.pessoas.persistencia.PessoaFisicaDAO;
 
 public class Main {
 	
@@ -9,4 +9,5 @@ public class Main {
 		PessoaFisicaDAO dao = new PessoaFisicaDAO();
 		dao.findAll();
 	}
+	
 }

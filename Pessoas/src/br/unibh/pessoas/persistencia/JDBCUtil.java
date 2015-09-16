@@ -1,4 +1,4 @@
-package br.unibh.pessoas.persitencia;
+package br.unibh.pessoas.persistencia;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
