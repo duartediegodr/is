@@ -10,7 +10,7 @@ import br.unibh.pessoas.entidades.PessoaFisica;
 
 public class PessoaFisicaDAO implements DAO<PessoaFisica, Long> {
 
-	private SimpleDateFormat df = new SimpleDateFormat("dd-MM-aaaa");
+	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Override
 	public PessoaFisica find(Long id) {
