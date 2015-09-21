@@ -49,12 +49,12 @@ public class PessoaFisicaDAO implements DAO<PessoaFisica, Long> {
 			PreparedStatement p = JDBCUtil.getConnection().prepareStatement(sql); 
 			
 			p.setString(1, t.getNome());
-			p.setString(1, t.getEndereco());
-			p.setString(1, t.getTelefone());
-			p.setString(1, t.getCpf());
-			p.setString(1, t.getEmail());
-			p.setString(1, df.format(t.getDataNascimento()));
-			p.setString(1, t.getSexo());
+			p.setString(2, t.getEndereco());
+			p.setString(3, t.getTelefone());
+			p.setString(4, t.getCpf());
+			p.setString(5, t.getEmail());
+			p.setString(6, df.format(t.getDataNascimento()));
+			p.setString(7, t.getSexo());
 			
 			p.executeUpdate();
 			
@@ -74,7 +74,18 @@ public class PessoaFisicaDAO implements DAO<PessoaFisica, Long> {
 
 	@Override
 	public void delete(PessoaFisica t) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "DELETE FROM pessoa_fisica WHERE ID = ?";
+			PreparedStatement p = JDBCUtil.getConnection().prepareStatement(sql); 
+			
+			p.setLong(1, t.getId());
+			p.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.closeConnection();
+		}
 		
 	}
 
@@ -109,4 +120,31 @@ public class PessoaFisicaDAO implements DAO<PessoaFisica, Long> {
 		return listaPesoaFisica;
 	}
 
+	public PessoaFisica find(String nome) {
+		PessoaFisica pessoafisica = null;
+		try {
+			String sql = "select * from pessoa_fisica where nome like ?";
+			PreparedStatement p = JDBCUtil.getConnection().prepareStatement(sql); 
+			p.setString(1, nome+"%");
+			
+			ResultSet res = p.executeQuery();
+			if (res.next()){
+				pessoafisica = new PessoaFisica(
+							res.getLong("id"),
+							res.getString("nome"), 
+							res.getString("endereco"), 
+							res.getString("telefone"), 
+							res.getString("cpf"), 
+							res.getString("email"), 
+							res.getDate("data_nascimento"), 
+							res.getString("sexo")
+						);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.closeConnection();
+		}
+		return pessoafisica;
+	}
 }
