@@ -68,7 +68,27 @@ public class PessoaFisicaDAO implements DAO<PessoaFisica, Long> {
 
 	@Override
 	public void update(PessoaFisica t) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "update pessoa_fisica set nome = ?, endereco = ?,"
+					+ " telefone = ?, cpf = ?, email = ?, data_nascimento = ?, sexo=? where id = ?";
+			PreparedStatement p = JDBCUtil.getConnection().prepareStatement(sql); 
+			
+			p.setString(1, t.getNome());
+			p.setString(2, t.getEndereco());
+			p.setString(3, t.getTelefone());
+			p.setString(4, t.getCpf());
+			p.setString(5, t.getEmail());
+			p.setString(6, df.format(t.getDataNascimento()));
+			p.setString(7, t.getSexo());
+			p.setLong(8, t.getId());
+			
+			p.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.closeConnection();
+		}
 		
 	}
 
